@@ -43,20 +43,10 @@
         Currently, Spring AI is not distributed in the central repository but rather in Spring's own Maven
         repository, so in order to include it, you need to add Spring's repository address in the pom.xml file.
         done into the setting maven.xml here
+		-->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-core</artifactId>
-			<version>1.0.0-M3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-anthropic-spring-boot-starter</artifactId>
-			<version>1.0.0-M3</version>
-		</dependency>
-			-->
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-bedrock-ai-spring-boot-starter</artifactId>
+			<artifactId>spring-ai-openai-spring-boot-starter</artifactId>
 			<version>1.0.0-M3</version>
 		</dependency>
 		<dependency>
