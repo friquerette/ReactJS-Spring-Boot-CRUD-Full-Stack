@@ -6,7 +6,9 @@ class ListEmployeeComponent extends Component {
         super(props)
 
         this.state = {
-                employees: []
+            employees: [],
+            oneQuestion: '',
+            theAnswerFromAI: 'aaa'
         }
         this.addEmployee = this.addEmployee.bind(this);
         this.editEmployee = this.editEmployee.bind(this);
@@ -33,6 +35,26 @@ class ListEmployeeComponent extends Component {
 
     addEmployee(){
         this.props.history.push('/add-employee/_add');
+    }
+
+    refreshOneQuestion= () => {
+        if (!this.state.oneQuestion) {
+            alert('you ask nothing');
+            return
+        }
+        this.state.theAnswerFromAI = '';
+        EmployeeService.askOneQuestion(this.state.oneQuestion).then(res => {
+            console.log(res.data)
+            this.setState({theAnswerFromAI: res.data});
+        });
+    }
+
+    changeOneQuestionHandler= (event) => {
+        this.setState({oneQuestion: event.target.value});
+    }
+
+    changeTheAnswerFromAIHandler= (event) => {
+        this.setState({oneQuestion: event.target.value});
     }
 
     render() {
@@ -72,9 +94,19 @@ class ListEmployeeComponent extends Component {
                                 }
                             </tbody>
                         </table>
-
                  </div>
-
+                <div className = "row">
+                    Your question:
+                    <input placeholder="the wanted question" name="question" className="form-control"
+                           value={this.state.oneQuestion} onChange={this.changeOneQuestionHandler}/>
+                </div>
+                <div className = "row">
+                    <button className="btn btn-success" onClick={this.refreshOneQuestion}>Ask</button>
+                </div>
+                <div className = "row">
+                    The answer from the AI:
+                    <textarea value={this.state.theAnswerFromAI} className="form-control"  onChange={this.changeTheAnswerFromAIHandler}></textarea>
+                </div>
             </div>
         )
     }

@@ -1,10 +1,22 @@
-# ReactJS-Spring-Boot-CRUD-Full-Stack-App - Course on YouTube
-#### Source :
+# ReactJS-Spring-Boot-CRUD-Full-Stack-App
+### Source :
 https://github.com/RameshMF/ReactJS-Spring-Boot-CRUD-Full-Stack-App
+
+## About AI integration
+### Gemini
+#### To create a new Gemini Project Key (just need a google account in 2024-11)
+https://aistudio.google.com/app/apikey
+here some help about the Google Json Key to set into environment variable
+https://stackoverflow.com/questions/77727695/google-gemini-api-error-defaultcredentialserror-your-default-credentials-were
+it needs to get the Autoriaztion for "Vertex AI User" or "Vertex AI Admin."
+####  Thecommand line to test Gemini using with a #PROJECT_KEY#
+curl -H 'Content-Type: application/json' -d '{"contents":[{"parts":[{"text":"Tell me a joke"}]}]}'
+-X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=#PROJECT_KEY#'
+
+## Course on YouTube:
 
 #### ReactJS + Spring Boot CRUD Full Stack App - 1 - Project Overview
 => https://youtu.be/n43h1eJ2EUE
-
 #### ReactJS + Spring Boot CRUD Full Stack App - 2 - Project Architecture and Development Process
 => https://youtu.be/iK__liBIXWk
 #### ReactJS + Spring Boot CRUD Full Stack App - 3 - Create Spring Boot Project and Configure MySQL
@@ -53,3 +65,4 @@ https://github.com/RameshMF/ReactJS-Spring-Boot-CRUD-Full-Stack-App
 => https://youtu.be/XRWnM51Cd7o
 #### ReactJS + Spring Boot CRUD Full Stack App - 25 - It's Demo Time and Source Code on GitHub
 => https://youtu.be/FX5HE_gnOTI
+

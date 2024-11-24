@@ -1,24 +1,32 @@
 package net.javaguides.springboot.model;
+import jakarta.persistence.*;
 
+import java.util.Date;
+
+@Entity
+@Table(name = "employees")
 public class Employee {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	@Column(name = "first_name")
 	private String firstName;
 
+	@Column(name = "last_name")
 	private String lastName;
 
+	@Column(name = "email_id")
 	private String emailId;
-	
-	public Employee() {
-		
-	}
 
-	public Employee(long id, String firstName, String lastName, String emailId) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.emailId = emailId;
+	@Basic(optional = false)
+	@Column(name = "created_at")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastTouched;
+
+	public Employee() {
+
 	}
 
 	public Employee(String firstName, String lastName, String emailId) {
@@ -50,5 +58,13 @@ public class Employee {
 	}
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
+	}
+
+	public Date getLastTouched() {
+		return lastTouched;
+	}
+
+	public void setLastTouched(Date lastTouched) {
+		this.lastTouched = lastTouched;
 	}
 }

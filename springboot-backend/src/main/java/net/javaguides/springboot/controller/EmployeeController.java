@@ -1,12 +1,13 @@
 package net.javaguides.springboot.controller;
 
 import net.javaguides.springboot.model.Employee;
-import net.javaguides.springboot.repository.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.javaguides.springboot.service.AIService;
+import net.javaguides.springboot.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,19 +17,37 @@ import java.util.Map;
 @RequestMapping("/api/v1/")
 public class EmployeeController {
 
-	@Autowired
-	private EmployeeService employeeService;
-	
+	private final EmployeeService employeeService;
+	private final AIService aiService;
+
+	public EmployeeController(EmployeeService employeeService, AIService aiService) {
+		this.employeeService = employeeService;
+		this.aiService = aiService;
+	}
+
 	// get all employees
 	@GetMapping("/employees")
-	public List<Employee> getAllEmployees(){
-		return employeeService.findAll();
-	}		
+	public List<Employee> getAllEmployees() {
+		var result = employeeService.findAll();
+		if (CollectionUtils.isEmpty(result)) {
+			initDatabase();
+			result = employeeService.findAll();
+		}
+		return result;
+	}
+
+	private void initDatabase() {
+		List<Employee> list = new ArrayList<>();
+		list.add(new Employee("Marc", "Martin", "marc.martin@gmail.com"));
+		list.add(new Employee("Marie", "Dupond", "dupond.martin@gmail.com"));
+		list.add(new Employee("Morgan", "Durand", "morgan.durand@gmail.com"));
+		list.add(new Employee("Mathis", "Dupuis", "mathis.dupuis@gmail.com"));
+		list.forEach(employeeService::save);
+	}
 	
 	// create employee rest api
 	@PostMapping("/employees")
 	public Employee createEmployee(@RequestBody Employee employee) {
-		employee.setId(employeeService.getNewKey());
 		return employeeService.save(employee);
 	}
 	
@@ -52,7 +71,7 @@ public class EmployeeController {
 		Employee updatedEmployee = employeeService.save(employee);
 		return ResponseEntity.ok(updatedEmployee);
 	}
-	
+
 	// delete employee rest api
 	@DeleteMapping("/employees/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable Long id){
@@ -61,6 +80,11 @@ public class EmployeeController {
 		response.put("deleted", employeeService.delete(employee));
 		return ResponseEntity.ok(response);
 	}
-	
+
+	// create employee rest api
+	@PostMapping("/employees/ask-one-ai")
+	public String askToOneAI(@RequestBody String oneQuestion) {
+		return aiService.getOneQuestion(oneQuestion);
+	}
 	
 }

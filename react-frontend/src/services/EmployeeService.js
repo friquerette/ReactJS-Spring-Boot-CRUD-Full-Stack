@@ -23,6 +23,11 @@ class EmployeeService {
     deleteEmployee(employeeId){
         return axios.delete(EMPLOYEE_API_BASE_URL + '/' + employeeId);
     }
+
+    askOneQuestion(oneQuestion){
+        console.log('ask', oneQuestion)
+        return axios.post(EMPLOYEE_API_BASE_URL + '/ask-one-ai', oneQuestion);
+    }
 }
 
 export default new EmployeeService()
